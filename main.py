@@ -33,15 +33,24 @@ while True:
     # Fill the hole in whitespace
     dil_frame = cv2.dilate(thresh_frame, None, iterations=2)
 
-    cv2.imshow("My video", dil_frame)
-
-    key = cv2.waitKey(1)
-
     # Find outlines of the image
     contours, check = cv2.findContours(dil_frame, 
                                        cv2.RETR_EXTERNAL, 
                                        cv2.CHAIN_APPROX_SIMPLE)
 
+    # Check for small contours less likely to be real objects
+    for contour in contours:
+        if cv2.contourArea(contour) < 10000:
+            continue
+        # Extreact the recatngle around large/real objects
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 3)
+
+    cv2.imshow("video", frame)
+    
+    # Waits for 1 millisecond for a key press after imshow.
+    key = cv2.waitKey(1)
+    
     if key == ord("q"):
         break
 
