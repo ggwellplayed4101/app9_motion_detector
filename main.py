@@ -27,8 +27,12 @@ while True:
     delta_frame = cv2.absdiff(first_frame, gray_frame_gau)
 
     # Convert grayscale video to white and black
-    thresh_frame = cv2.threshold(delta_frame, 60, 255, 
+    thresh_frame = cv2.threshold(delta_frame, 40, 255, 
                                  cv2.THRESH_BINARY)[1]
+    
+    # Fill the hole in whitespace
+    dil_frame = cv2.dilate(thresh_frame, None, iterations=2)
+
     cv2.imshow("My video", thresh_frame)
 
     key = cv2.waitKey(1)
