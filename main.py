@@ -33,7 +33,7 @@ while True:
     # Fill the hole in whitespace
     dil_frame = cv2.dilate(thresh_frame, None, iterations=2)
 
-    cv2.imshow("My video", thresh_frame)
+    cv2.imshow("My video", dil_frame)
 
     key = cv2.waitKey(1)
 
