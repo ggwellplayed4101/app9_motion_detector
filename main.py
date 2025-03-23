@@ -40,9 +40,9 @@ while True:
 
     # Check for small contours less likely to be real objects
     for contour in contours:
-        if cv2.contourArea(contour) < 10000:
+        if cv2.contourArea(contour) < 20000:
             continue
-        # Extreact the recatngle around large/real objects
+        # Extract the recatngle around large/real objects
         x, y, w, h = cv2.boundingRect(contour)
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 3)
 
@@ -50,7 +50,7 @@ while True:
     
     # Waits for 1 millisecond for a key press after imshow.
     key = cv2.waitKey(1)
-    
+
     if key == ord("q"):
         break
 
