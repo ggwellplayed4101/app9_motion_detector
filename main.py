@@ -37,6 +37,11 @@ while True:
 
     key = cv2.waitKey(1)
 
+    # Find outlines of the image
+    contours, check = cv2.findContours(dil_frame, 
+                                       cv2.RETR_EXTERNAL, 
+                                       cv2.CHAIN_APPROX_SIMPLE)
+
     if key == ord("q"):
         break
 
