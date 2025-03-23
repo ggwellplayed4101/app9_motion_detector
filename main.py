@@ -14,7 +14,8 @@ while True:
     # Frame stores the image data in matrix form
     check, frame = video.read()
 
-    # Apply gray scale and Gausian blur to make the matrix less complex
+    """ Apply gray scale and Gausian blur 
+    To Make the matrix less complex """
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame_gau = cv2.GaussianBlur(gray_frame, (21,21), 0)
 
@@ -24,7 +25,11 @@ while True:
         first_frame = gray_frame_gau
 
     delta_frame = cv2.absdiff(first_frame, gray_frame_gau)
-    cv2.imshow("My video", delta_frame)
+
+    # Convert grayscale video to white and black
+    thresh_frame = cv2.threshold(delta_frame, 30, 255, 
+                                 cv2.THRESH_BINARY)
+    cv2.imshow("My video", thresh_frame)
 
     key = cv2.waitKey(1)
 
