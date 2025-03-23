@@ -1,13 +1,20 @@
 import cv2
 import time
 
+# Open camera
 video = cv2.VideoCapture(0)
+
+# Wait 1 second for camera to open and configure
 time.sleep(1)
 
 first_frame = None
 
+# Continuosly read frames
 while True:
+    # Frame stores the image data in matrix form
     check, frame = video.read()
+
+    # Apply gray scale and Gausian blur to make the matrix less complex
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame_gau = cv2.GaussianBlur(gray_frame, (21,21), 0)
 
