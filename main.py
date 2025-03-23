@@ -28,7 +28,7 @@ while True:
 
     # Convert grayscale video to white and black
     thresh_frame = cv2.threshold(delta_frame, 30, 255, 
-                                 cv2.THRESH_BINARY)
+                                 cv2.THRESH_BINARY)[1]
     cv2.imshow("My video", thresh_frame)
 
     key = cv2.waitKey(1)
