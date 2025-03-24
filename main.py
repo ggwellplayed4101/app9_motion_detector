@@ -1,5 +1,6 @@
 import cv2
 import time
+from mailing import send_email
 
 # Open camera
 video = cv2.VideoCapture(0)
@@ -8,9 +9,11 @@ video = cv2.VideoCapture(0)
 time.sleep(1)
 
 first_frame = None
+status_list = []
 
 # Continuosly read frames
 while True:
+    status = 0
     # Frame stores the image data in matrix form
     check, frame = video.read()
 
@@ -42,9 +45,22 @@ while True:
     for contour in contours:
         if cv2.contourArea(contour) < 20000:
             continue
+
         # Extract the recatngle around large/real objects
         x, y, w, h = cv2.boundingRect(contour)
-        cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 3)
+        rectangle = cv2.rectangle(frame, (x,y), 
+                                  (x+w, y+h), (0, 255, 0), 3)
+        
+        if rectangle.any():
+            status = 1
+    
+    # Captures the status of the last 2 frames
+    status_list.append(status)
+    status_list = status_list[-2:]
+
+    # If object leaves the frame the email is sent
+    if status_list[0] ==  1 and status_list[1] == 0:
+        send_email()
 
     cv2.imshow("video", frame)
     
