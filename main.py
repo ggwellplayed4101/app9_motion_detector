@@ -10,6 +10,7 @@ time.sleep(1)
 
 first_frame = None
 status_list = []
+count = 1
 
 # Continuosly read frames
 while True:
@@ -53,6 +54,9 @@ while True:
         
         if rectangle.any():
             status = 1
+            # Save frames where object appear as image
+            cv2.imwrite(f"images/{count}.png", frame)
+            count += 1
     
     # Captures the status of the last 2 frames
     status_list.append(status)
