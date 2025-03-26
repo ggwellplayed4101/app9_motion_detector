@@ -1,6 +1,8 @@
 import cv2
 import time
 import glob
+import os
+import shutil
 from mailing import send_email
 
 # Open camera
@@ -55,13 +57,19 @@ while True:
         
         if rectangle.any():
             status = 1
+            # Create a single folder
+            os.mkdir("images")
+
             # Save frames where object appear as image
             cv2.imwrite(f"images/{count}.png", frame)
             count += 1
+
             # Loading the image saved in the middle to a variable      
             all_images = glob.glob("images/*.png")
             index = int(len(all_images) / 2)
-            image_with_object = all_images[index]
+            if len(all_images) > 0:
+                image_with_object = all_images[index]
+            print (index)
            
 
    
@@ -82,4 +90,5 @@ while True:
     if key == ord("q"):
         break
 
+shutil.rmtree("images")
 video.release()
