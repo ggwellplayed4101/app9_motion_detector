@@ -58,7 +58,6 @@ while True:
         if rectangle.any():
             status = 1
 
-
             # Create a single folder if that folder does not exist
             if not os.path.isdir("images"):
                 os.mkdir("images")
@@ -83,7 +82,8 @@ while True:
 
     # If object leaves the frame the email is sent
     if status_list[0] ==  1 and status_list[1] == 0:
-        send_email()
+        send_email(image_with_object)
+        print("Email Sent!")
 
     cv2.imshow("video", frame)
     
@@ -93,5 +93,4 @@ while True:
     if key == ord("q"):
         break
 
-# shutil.rmtree("images")
 video.release()
