@@ -57,8 +57,11 @@ while True:
         
         if rectangle.any():
             status = 1
-            # Create a single folder
-            os.mkdir("images")
+
+
+            # Create a single folder if that folder does not exist
+            if not os.path.isdir("images"):
+                os.mkdir("images")
 
             # Save frames where object appear as image
             cv2.imwrite(f"images/{count}.png", frame)
@@ -90,5 +93,5 @@ while True:
     if key == ord("q"):
         break
 
-shutil.rmtree("images")
+# shutil.rmtree("images")
 video.release()
