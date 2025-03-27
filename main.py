@@ -3,6 +3,7 @@ import time
 import glob
 import os
 from mailing import send_email
+from threading import Thread
 
 # Open camera
 video = cv2.VideoCapture(0)
@@ -14,6 +15,7 @@ first_frame = None
 status_list = []
 count = 1
 
+# Delete images inside images folder
 def clean_folder():
     images = glob.glob("images/*.png")
     for image in images:
@@ -84,8 +86,18 @@ while True:
 
     # If object leaves the frame the email is sent
     if status_list[0] ==  1 and status_list[1] == 0:
-        send_email(image_with_object)
-        clean_folder()
+        # Prepare threads to send email
+        email_thread = Thread(target=send_email, arg=(image_with_object))
+        email_thread.daemon = True
+        
+        # Prepare threads to clean folder
+        clean_thread = Thread(target=clean_folder)
+        clean_thread.daemon = True
+
+        # Execuring threads
+        email_thread.start()
+        clean_thread.start()
+
         print("Email Sent!")
 
     cv2.imshow("video", frame)
