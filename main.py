@@ -87,7 +87,7 @@ while True:
     # If object leaves the frame the email is sent
     if status_list[0] ==  1 and status_list[1] == 0:
         # Prepare threads to send email
-        email_thread = Thread(target=send_email, arg=(image_with_object))
+        email_thread = Thread(target=send_email, args=(image_with_object, ))
         email_thread.daemon = True
         
         # Prepare threads to clean folder
