@@ -17,9 +17,11 @@ count = 1
 
 # Delete images inside images folder
 def clean_folder():
+    print("clean folder function started")
     images = glob.glob("images/*.png")
     for image in images:
         os.remove(image)
+    print("clean folder function ended")
 
 # Continuosly read frames
 while True:
@@ -96,9 +98,7 @@ while True:
 
         # Execuring threads
         email_thread.start()
-        clean_thread.start()
-
-        print("Email Sent!")
+        
 
     cv2.imshow("video", frame)
     
@@ -109,3 +109,5 @@ while True:
         break
 
 video.release()
+        
+clean_thread.start()

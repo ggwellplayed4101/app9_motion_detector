@@ -8,6 +8,7 @@ SENDER = "ggwellplayed4101@gmail.com"
 RECIEVER = "bhargavchataut101@gmail.com"
 
 def send_email(image_path):
+    print("send email function started")
     # Create object which can mail attachments 
     email_message = EmailMessage()
     email_message["Subject"] = "New customer showed up!"
@@ -29,7 +30,7 @@ def send_email(image_path):
     gmail.login(SENDER, PASSWORD)
     gmail.sendmail(SENDER, RECIEVER, email_message.as_string())
     gmail.quit()
-
+    print("send email function ended")
 
 if __name__ == "__main__":
     send_email(image_path="images/7.png")
