@@ -98,7 +98,7 @@ while True:
 
         # Execuring threads
         email_thread.start()
-        
+
 
     cv2.imshow("video", frame)
     
@@ -111,3 +111,5 @@ while True:
 video.release()
         
 clean_thread.start()
+email_thread.join()
+clean_thread.join()
