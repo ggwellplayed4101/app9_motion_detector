@@ -2,7 +2,6 @@ import cv2
 import time
 import glob
 import os
-import shutil
 from mailing import send_email
 
 # Open camera
@@ -14,6 +13,11 @@ time.sleep(1)
 first_frame = None
 status_list = []
 count = 1
+
+def clean_folder():
+    images = glob.glob("images/*.png")
+    for image in images:
+        os.remove(image)
 
 # Continuosly read frames
 while True:
@@ -71,9 +75,7 @@ while True:
             index = int(len(all_images) / 2)
             if len(all_images) > 0:
                 image_with_object = all_images[index]
-            print (index)
-           
-
+            print (index)           
    
 
     # Captures the status of the last 2 frames
@@ -83,6 +85,7 @@ while True:
     # If object leaves the frame the email is sent
     if status_list[0] ==  1 and status_list[1] == 0:
         send_email(image_with_object)
+        clean_folder()
         print("Email Sent!")
 
     cv2.imshow("video", frame)
